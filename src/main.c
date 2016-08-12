@@ -1,3 +1,7 @@
+
+// Si apreto boton funciona el pwm en todos los leds, se van apagando y encendiendo los leds
+// Si suelto el boton los leds quedan con un brillo determinado
+
 #include "bsp/bsp.h"
 
 void APP_1ms(void);
@@ -13,11 +17,6 @@ uint16_t counter = 10;		// Contador de 10 ms
 int main(void) {
 
 	BSP_Init();
-
-//	led_setBright(LED_ROJO, 0);
-//	led_setBright(LED_AZUL, 0);
-//	led_setBright(LED_VERDE, 0);
-//	led_setBright(LED_NARANJA, 0);
 
 	while (1) {
 
