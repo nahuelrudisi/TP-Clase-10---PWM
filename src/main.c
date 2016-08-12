@@ -6,27 +6,36 @@ void APP_1ms(void);
 #define DECREASE 0
 
 
-uint8_t brightness = 0;
-uint8_t intensity = 1;
-uint16_t counter = 10;
+uint8_t brightness = 0;		// Brillo
+uint8_t intensity = 1;		// Intensidad para saber si esta incrementando o decrementando
+uint16_t counter = 10;		// Contador de 10 ms
 
 int main(void) {
 
 	BSP_Init();
 
+//	led_setBright(LED_ROJO, 0);
+//	led_setBright(LED_AZUL, 0);
+//	led_setBright(LED_VERDE, 0);
+//	led_setBright(LED_NARANJA, 0);
+
 	while (1) {
 
-		if (!counter){
-			if(intensity == INCREASE){
-				brightness ++;
-				if (brightness >= 100)
-					intensity = DECREASE;
-			}else{
-				brightness --;
-				if(!brightness)
-					intensity = INCREASE;
+		while(!Get_SW_State());	// Lee Boton
+		{
+			if (!counter){
+
+				if(intensity == INCREASE){
+					brightness ++;
+						if (brightness >= 100)
+							intensity = DECREASE;
+				}else{
+					brightness --;
+					if(!brightness)
+						intensity = INCREASE;
+				}
+				counter = 10;
 			}
-			counter = 10;
 		}
 
 		led_setBright(LED_ROJO, brightness);

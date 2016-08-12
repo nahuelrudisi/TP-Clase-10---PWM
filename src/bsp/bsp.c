@@ -52,8 +52,8 @@ void BSP_Init(void) {
 	GPIO_Init.Mode = GPIO_MODE_AF_PP;
 	GPIO_Init.Pull = GPIO_NOPULL;
 	GPIO_Init.Speed = GPIO_SPEED_FAST;
-	GPIO_Init.Alternate = GPIO_AF2_TIM4;
-	GPIO_Init.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+	GPIO_Init.Alternate = GPIO_AF2_TIM4;		// El timer 4 es para PWM
+	GPIO_Init.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;	// Pines de los leds
 	HAL_GPIO_Init(LEDS_PORT, &GPIO_Init);
 
 	__TIM2_CLK_ENABLE()
@@ -61,7 +61,7 @@ void BSP_Init(void) {
 
 	TIM2_Handle.Instance = TIM2;
 	TIM2_Handle.Init.Period = 1000 - 1;
-	TIM2_Handle.Init.Prescaler = 84 - 1;
+	TIM2_Handle.Init.Prescaler = 84 - 1;			// 84 MHz / 84 = 1 MHz
 	TIM2_Handle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	TIM2_Handle.Init.CounterMode = TIM_COUNTERMODE_UP;
 
@@ -78,7 +78,7 @@ void BSP_Init(void) {
 	GPIO_Init.Pull = GPIO_NOPULL;
 	GPIO_Init.Speed = GPIO_SPEED_FAST;
 	GPIO_Init.Pin = GPIO_PIN_0;
-	HAL_GPIO_Init(GPIOA, &GPIO_Init);
+	HAL_GPIO_Init(GPIOA, &GPIO_Init);		// Inicializa puerto A para usar el boton
 
 	__TIM3_CLK_ENABLE()
 	;
@@ -102,7 +102,7 @@ void BSP_Init(void) {
 
 	TIM_OC_Init.OCMode = TIM_OCMODE_PWM2;
 	TIM_OC_Init.Pulse = 0;
-	TIM_OC_Init.OCPolarity = TIM_OCPOLARITY_LOW;
+	TIM_OC_Init.OCPolarity = TIM_OCPOLARITY_LOW;	// Para que el 0 del ciclo de trabajo sea bajo
 	TIM_OC_Init.OCFastMode = TIM_OCFAST_ENABLE;
 
 	HAL_TIM_PWM_ConfigChannel(&TIM4_Handle, &TIM_OC_Init, TIM_CHANNEL_1);
@@ -121,12 +121,11 @@ uint32_t Get_SW_State(void) {
 }
 
 void led_setBright(uint8_t led, uint8_t value) {
-	*leds_pwm[led] = 1000 * value / 100;
+	*leds_pwm[led] = 1000 * value / 100;			// Para tener el rango de PWM entre 0 y 100
 }
 
 void TIM2_IRQHandler(void) {
 
 	__HAL_TIM_CLEAR_FLAG(&TIM2_Handle, TIM_FLAG_UPDATE);
 	APP_1ms();
-
 }
