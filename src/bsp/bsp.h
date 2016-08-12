@@ -24,7 +24,6 @@ void BSP_Init(void);
 //void led_setBright(uint8_t led, uint8_t value);
 
 uint32_t Get_SW_State(void);
-uint32_t Get_SW_State(void);
 
 void led_setBright(uint8_t led, uint8_t value);
 
