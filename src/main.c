@@ -1,6 +1,6 @@
 
-// Si apreto boton funciona el pwm en todos los leds, se van apagando y encendiendo los leds
-// Si suelto el boton los leds quedan con un brillo determinado
+// Si no apreto el boton los leds se van encendiendo de a uno hacia un lado cuando se encendieron todos se apagan todos y se repite,
+// si apreto el boton los leds se van apagando para el otro lado cuando se apagaron todos se encienden todos y se repite
 
 #include "bsp/bsp.h"
 
