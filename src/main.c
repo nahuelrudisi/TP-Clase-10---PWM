@@ -9,45 +9,76 @@ void APP_1ms(void);
 #define INCREASE 1
 #define DECREASE 0
 
-
 uint8_t brightness = 0;		// Brillo
-uint8_t intensity = 1;		// Intensidad para saber si esta incrementando o decrementando
-uint16_t counter = 10;		// Contador de 10 ms
+uint16_t counter = 0;
+uint8_t color = 1;
 
 int main(void) {
 
 	BSP_Init();
 
-	while (1) {
+	led_setBright(LED_ROJO, 0);
+	led_setBright(LED_AZUL, 0);
+	led_setBright(LED_VERDE, 0);
+	led_setBright(LED_NARANJA, 0);
 
-		while(!Get_SW_State());	// Lee Boton
-		{
-			if (!counter){
-
-				if(intensity == INCREASE){
-					brightness ++;
-						if (brightness >= 100)
-							intensity = DECREASE;
-				}else{
-					brightness --;
-					if(!brightness)
-						intensity = INCREASE;
-				}
-				counter = 10;
-			}
-		}
-
-		led_setBright(LED_ROJO, brightness);
-		led_setBright(LED_AZUL, brightness);
-		led_setBright(LED_VERDE, brightness);
-		led_setBright(LED_NARANJA, brightness);
-	}
+	while (1) {	}
 }
 
-void APP_1ms(void) {
-
-	if(counter){
-		counter--;
+void APP_1ms(void)
+{
+	if(counter == 10)
+	{
+		counter = 0;
+		if(Get_SW_State() == 0)	// Lee Boton
+		{
+			if (brightness < 50)
+				brightness ++;
+			else
+			{
+				color++;
+				brightness = 0;
+			}
+		}
+		else
+		{
+			if (brightness > 0)
+				brightness --;
+			else
+			{
+				color--;
+				brightness = 50;
+			}
+		}
 	}
-
+	switch(color)
+	{
+		case 0:
+				color = 4;
+				led_setBright(LED_ROJO, 50);
+				led_setBright(LED_AZUL, 50);
+				led_setBright(LED_VERDE, 50);
+				led_setBright(LED_NARANJA, 50);
+		case 1:
+				led_setBright(LED_ROJO, brightness);
+				break;
+		case 2:
+				led_setBright(LED_AZUL, brightness);
+				break;
+		case 3:
+				led_setBright(LED_VERDE, brightness);
+				break;
+		case 4:
+				led_setBright(LED_NARANJA, brightness);
+				break;
+		case 5:
+				color=1;
+				led_setBright(LED_ROJO, 0);
+				led_setBright(LED_AZUL, 0);
+				led_setBright(LED_VERDE, 0);
+				led_setBright(LED_NARANJA, 0);
+		default:
+				break;
+	}
+	counter++;
 }

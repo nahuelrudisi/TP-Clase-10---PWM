@@ -121,7 +121,8 @@ uint32_t Get_SW_State(void) {
 }
 
 void led_setBright(uint8_t led, uint8_t value) {
-	*leds_pwm[led] = 1000 * value / 100;			// Para tener el rango de PWM entre 0 y 100
+//	*leds_pwm[led] = 1000 * value / 100;			// Para tener el rango de PWM entre 0 y 100 es mas logaritmico
+	*leds_pwm[led] = 300 * value / 100;
 }
 
 void TIM2_IRQHandler(void) {
