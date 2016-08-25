@@ -1,5 +1,10 @@
 
+<<<<<<< HEAD
 // Si no apreto boton los leds se van encendiendo en un sentido, si apreto boton los leds se apagan en el otro sentido
+=======
+// Si no apreto el boton los leds se van encendiendo de a uno hacia un lado cuando se encendieron todos se apagan todos y se repite,
+// si apreto el boton los leds se van apagando para el otro lado cuando se apagaron todos se encienden todos y se repite
+>>>>>>> 7b7cc2e5ef284f86b8cdcda586f2d108a69fcd20
 
 #include "bsp/bsp.h"
 
